@@ -1,11 +1,14 @@
+ // Author- Tejasvi Raj Pant
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Components/App/App';
+//import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import rootReducer from './store/reducers/rootReducer'
+import rootReducer from './state/reducers/rootReducer'
 import thunk from "redux-thunk";
 
 const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,3 +25,4 @@ ReactDOM.render(<Provider store={store}>
                 </Provider>, 
                 document.getElementById('root')
                 );
+//registerServiceWorker();
