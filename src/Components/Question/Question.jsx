@@ -1,0 +1,32 @@
+// Author- Tejasvi Raj Pant
+
+import React from 'react';
+import classes from './Question.css';
+
+
+class Question extends React.Component {
+    constructor(props) {
+        super(props);
+        this.selectAnswer = this.selectAnswer.bind(this);
+    }
+
+    selectAnswer(selectedAnswer) {
+        this.props.selectAnswer(this.props.selectedQuestionIndex, selectedAnswer);
+    }
+    render() {
+        return (
+            <div>
+                <div>
+                    <p> {this.props.question} </p>
+                    {this.props.choices.map(choice => {
+                        return <div key={choice} onClick={() => this.selectAnswer(choice)}>
+                            {choice}
+                        </div>
+                    })}
+                </div>
+            </div>
+        );
+    }
+}
+
+export default Question;

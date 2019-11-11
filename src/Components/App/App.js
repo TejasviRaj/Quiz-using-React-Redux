@@ -1,9 +1,10 @@
+ // Author- Tejasvi Raj Pant
+
 import React, { Component } from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 
 import Quiz from '../Quiz/Quiz';
-import Header from '../Header/Header';
 import classes from './App.css';
 
 let arr = [
@@ -67,7 +68,10 @@ class App extends Component {
                     </div>
                 </section>
 
-        
+                <div>
+                    <Route path="/"
+                        component={Quiz} />
+                </div>
             </React.Fragment>
         );
     }
