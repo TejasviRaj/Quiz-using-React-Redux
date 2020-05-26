@@ -1,6 +1,7 @@
 import backupQuestionAnswerList from './backupQuestionAnswerList'
 import he from 'he';
 
+// bound to Quiz
 export default function fetchData() {
     this.questionAnswerList = null;
 
