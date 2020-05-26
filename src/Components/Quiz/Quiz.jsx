@@ -1,10 +1,10 @@
- // Author- Tejasvi Raj Pant
+// Author- Tejasvi Raj Pant
 
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {gotoNextQuestion, gotoPrevQuestion} from '../../state/actions/gotoQuestionsCreator'
-import {customSelectAnswer} from '../../state/actions/selectAnswerCreator'
-import {getData} from '../../state/actions/apiDataCreator';
+import { gotoNextQuestion, gotoPrevQuestion } from '../../state/actions/gotoQuestionsCreator'
+import { customSelectAnswer } from '../../state/actions/selectAnswerCreator'
+import { fetchData } from '../../state/actions/quizAPICreator';
 import classes from './Quiz.css';
 import Question from '../Question/Question';
 import { withRouter } from "react-router-dom";
@@ -16,14 +16,16 @@ class Quiz extends Component {
         super(props);
         this.state = {
             isSubmit: false,
-            score: 0
+            score: 0,
+            dataFetched: 0
         };
+        this.questionAnswerList = null;
         this.id = this.props.match.params.id;
         this.selectAnswer = this.selectAnswer.bind(this);
         this.onNextButtonHandler = this.onNextButtonHandler.bind(this);
     }
 
-    questionAnswerList = [
+    backupQuestionAnswerList = [
         {
             question: "Who played Hey Jude?",
             choices: ["Beatles", "Pink Floyd", "Mettalica", "Nirvana"],
@@ -47,14 +49,25 @@ class Quiz extends Component {
     ];
 
 
-    componentDidMount(){
-        this.props.getData(this.id);
+    componentDidMount() {
+
+        this.props.fetchData(this.id).then(() => {
+            console.log(this.props.questionAnswerList[0]["response_code"]);
+            let resultArray = (this.props.questionAnswerList[0]["results"]);
+            for (let i of resultArray) {
+                console.log(i);
+                this.questionAnswerList = this.backupQuestionAnswerList;
+            }
+            console.log(typeof resultArray);
+        }).catch(() => {
+            this.questionAnswerList = this.backupQuestionAnswerList.slice();
+        }).finally(() => this.setState({dataFetched: !this.state.dataFetched}));
     }
 
     selectAnswer(questionId, selectedAnswer) {
-        if (this.props.selectedQuestionIndex === (this.questionAnswerList.length-1)){
+        if (this.props.selectedQuestionIndex === (this.questionAnswerList.length - 1)) {
             this.props.selectAnswer(questionId, selectedAnswer, null).then(() => this.calculateScore());
-            
+
             return;
         }
         this.props.selectAnswer(questionId, selectedAnswer, this.calculateScore);
@@ -69,14 +82,7 @@ class Quiz extends Component {
     onNextButtonHandler() {
         this.props.gotoNextQuestion();
         this.calculateScore();
-        console.log(this.props.apiData[0]["response_code"]);
-        let resultArray = (this.props.apiData[0]["results"]);
-        for (let i of resultArray) {
-            console.log(i);
-        }
-        console.log(typeof resultArray)
-
-
+      
     }
 
     onSubmitQuizHandler = () => {
@@ -91,42 +97,47 @@ class Quiz extends Component {
                 score++;
             }
         });
-        this.setState({ score: score*10 });
+        this.setState({ score: score * 10 });
     }
 
     render() {
+
+        if (!this.questionAnswerList) {
+            return null;
+        }
+
         const { question, choices } = this.questionAnswerList[this.props.selectedQuestionIndex];
 
         if (!this.state.isSubmit) {
             return (
-                <div className = {classes.quizBox}>
-                    <p class = {classes.score}>Score - {this.state.score} </p>
-                        <Question
-                            selectedAnswer={this.props.selectedAnswers[this.props.selectedQuestionIndex]}
-                            selectAnswer={this.selectAnswer}
-                            selectedQuestionIndex={this.props.selectedQuestionIndex}
-                            question = {question}
-                            choices = {choices}
-                            className = {classes.question}
-                        />
-                        <div class = "skipBackBtns">
-                                {this.props.selectedQuestionIndex > 0 ? <button className = {classes.submit} onClick={this.onPrevButtonHandler}>BACK</button> : <div> </div>}
-                                {(this.props.selectedQuestionIndex < (this.questionAnswerList.length-1))? <button className = {classes.submit} onClick={this.onNextButtonHandler}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE': 'SKIP'}</button>: <button className = {classes.submit} onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
-                        </div>
+                <div className={classes.quizBox}>
+                    <p class={classes.score}>Score - {this.state.score} </p>
+                    <Question
+                        selectedAnswer={this.props.selectedAnswers[this.props.selectedQuestionIndex]}
+                        selectAnswer={this.selectAnswer}
+                        selectedQuestionIndex={this.props.selectedQuestionIndex}
+                        question={question}
+                        choices={choices}
+                        className={classes.question}
+                    />
+                    <div class="skipBackBtns">
+                        {this.props.selectedQuestionIndex > 0 ? <button className={classes.submit} onClick={this.onPrevButtonHandler}>BACK</button> : <div> </div>}
+                        {(this.props.selectedQuestionIndex < (this.questionAnswerList.length - 1)) ? <button className={classes.submit} onClick={this.onNextButtonHandler}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE' : 'SKIP'}</button> : <button className={classes.submit} onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
+                    </div>
                 </div>
             );
         }
         else {
             return (
                 <React.Fragment>
-                <div className = {classes.quizBox}>
-                    <p className = {classes.quizCaptionHeading}>Results </p>
-                    <br/>
-                    <p className = {classes.quizCaptionSH}>Score - {this.state.score} </p> 
-                    <p className = {classes.quizCaptionSH}>Total - 100 </p> 
+                    <div className={classes.quizBox}>
+                        <p className={classes.quizCaptionHeading}>Results </p>
+                        <br />
+                        <p className={classes.quizCaptionSH}>Score - {this.state.score} </p>
+                        <p className={classes.quizCaptionSH}>Total - 100 </p>
 
-                    <button className = {classes.submit}>HOME</button>
-                    </div>              
+                        <button className={classes.submit}>HOME</button>
+                    </div>
                 </React.Fragment>
             );
         }
@@ -138,7 +149,7 @@ const mapStateToProps = state => {
     return {
         selectedQuestionIndex: state.selectedQuestionsIndex.selectedQuestionIndex,
         selectedAnswers: state.selectedAnswers.selectedAnswers,
-        apiData :state.apiData.apiData
+        questionAnswerList: state.questionAnswerList.questionAnswerList
     }
 }
 
@@ -147,7 +158,7 @@ const mapDispatchToProps = dispatch => {
         gotoNextQuestion: () => dispatch(gotoNextQuestion()),
         gotoPrevQuestion: () => dispatch(gotoPrevQuestion()),
         selectAnswer: (questionId, selectedAnswer, callback) => dispatch(customSelectAnswer(questionId, selectedAnswer, callback)),
-        getData: (category) => dispatch(getData(category))
+        fetchData: (category) => dispatch(fetchData(category))
     }
 }
 
