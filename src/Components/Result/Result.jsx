@@ -12,7 +12,7 @@ const Result = (props) => {
             <p className={classes.quizCaptionSH}>Score - {props.score} </p>
             <p className={classes.quizCaptionSH}>Total - 100 </p>
 
-            <Link to="/">
+            <Link to={process.env.PUBLIC_URL + "/"}>
             <button className={classes.submit}>HOME</button>
             </Link>
         </div>

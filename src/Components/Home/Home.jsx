@@ -46,7 +46,7 @@ class Home extends Component {
             return (
                 <div className={classes.quizRow} > {
                     arr.map((item) =>
-                    <Link to={'/' + item.id} class={classes.quizItem}>
+                    <Link to={process.env.PUBLIC_URL + '/' + item.id} class={classes.quizItem}>
                             <a class={classes.quizLink}
                                 href="#" >
                                 <div className={classes.quizHover} >
