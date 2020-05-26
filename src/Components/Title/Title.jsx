@@ -1,3 +1,5 @@
+// Author- Tejasvi Raj Pant
+
 import React from 'react';
 
 const Title = (props) => {
