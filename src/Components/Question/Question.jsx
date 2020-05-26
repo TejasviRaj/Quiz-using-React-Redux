@@ -18,7 +18,7 @@ class Question extends React.Component {
             <div className = {classes.questionBox}>
                     <p className = {classes.question}> {this.props.question} </p>
                     {this.props.choices.map(choice => {
-                        return <button className = {classes.choice} key={choice} onClick={() => this.selectAnswer(choice)}>
+                        return <button className = {classes.choice + " " + (choice === this.props.selectedAnswer? classes.selectedChoice: "")} key={choice} onClick={() => this.selectAnswer(choice)}>
                             {choice}
                         </button>
                     })}

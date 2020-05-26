@@ -18,6 +18,15 @@ border: 1px solid #3E8BD5;
 border-radius: 20px;
 }
 
+.choice:hover {
+    background-color: #4B4B71;
+}
+
+.selectedChoice {
+    background-color: #4B4B71;
+
+}
+
 .questionBox {
     display: flex;
     flex-direction: column;
