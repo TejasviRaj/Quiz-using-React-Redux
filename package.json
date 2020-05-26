@@ -2,6 +2,7 @@
   "name": "quiz",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tejasviraj.github.io/Quiz-using-React-Redux",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
@@ -24,7 +25,6 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
-    "gh-pages": "^1.1.0",
     "he": "^1.2.0",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
@@ -50,7 +50,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b gh-pages -d build",
+    "deploy": "gh-pages -d build",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
@@ -98,6 +98,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "gh-pages": "^1.2.0",
     "redux-thunk": "^2.3.0"
   }
 }

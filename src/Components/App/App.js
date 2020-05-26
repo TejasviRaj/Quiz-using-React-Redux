@@ -17,7 +17,7 @@ class App extends Component {
                 <section >
                     <div class={classes.quizContainer} >
                       
-                        <Route exact path="/"
+                        <Route exact path="/Quiz-using-React-Redux"
                         component={Home} >
 
                         </Route>

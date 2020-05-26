@@ -9,7 +9,6 @@ import {resetQuestionCounter} from '../../state/actions/resetQuestionCounterCrea
 import classes from './Quiz.css';
 import Question from '../Question/Question';
 import { withRouter } from "react-router-dom";
-import {Link} from 'react-router-dom'
 import Result from '../Result/Result';
 import fetchDataFromAPI from './fetchData'
 
@@ -60,7 +59,7 @@ class Quiz extends Component {
             }
         });
         this.setState({ score: score * 10 });
-    }
+    };
 
     render() {
 
