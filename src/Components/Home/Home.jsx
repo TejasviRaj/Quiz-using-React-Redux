@@ -2,6 +2,13 @@
 
  import React, { Component } from 'react';
 import classes from './Home.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams
+  } from "react-router-dom";
 
 let arr = [
     
@@ -39,7 +46,7 @@ class Home extends Component {
             return (
                 <div className={classes.quizRow} > {
                     arr.map((item) =>
-                        < div class={classes.quizItem} >
+                    <Link to={'/' + item.id} class={classes.quizItem}>
                             <a class={classes.quizLink}
                                 href="#" >
                                 <div className={classes.quizHover} >
@@ -50,7 +57,7 @@ class Home extends Component {
                             <div className={classes.quizCaption} >
                                 <div className={classes.quizCaptionHeading} > {item.name} </div>
                             </div >
-                        </div>)}
+                        </Link>)}
                 </div>
             );
         }

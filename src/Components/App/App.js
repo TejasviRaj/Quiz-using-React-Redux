@@ -22,7 +22,7 @@ class App extends Component {
                 <section >
                     <div class={classes.quizContainer} >
                       
-                        <Route path="/cat"
+                        <Route exact path="/"
                         component={Home} >
 
                         </Route>
@@ -30,7 +30,7 @@ class App extends Component {
                 </section>
 
                 <div>
-                    <Route path="/quiz"
+                    <Route path="/:id"
                         component={Quiz} />
                 </div>
             </React.Fragment>

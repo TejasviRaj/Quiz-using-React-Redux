@@ -7,6 +7,8 @@ import {customSelectAnswer} from '../../state/actions/selectAnswerCreator'
 import {getData} from '../../state/actions/apiDataCreator';
 import classes from './Quiz.css';
 import Question from '../Question/Question';
+import { withRouter } from "react-router-dom";
+
 
 class Quiz extends Component {
 
@@ -16,6 +18,7 @@ class Quiz extends Component {
             isSubmit: false,
             score: 0
         };
+        this.id = this.props.match.params.id;
         this.selectAnswer = this.selectAnswer.bind(this);
         this.onNextButtonHandler = this.onNextButtonHandler.bind(this);
     }
@@ -45,7 +48,7 @@ class Quiz extends Component {
 
 
     componentDidMount(){
-        this.props.getData();
+        this.props.getData(this.id);
     }
 
     selectAnswer(questionId, selectedAnswer) {
@@ -66,7 +69,13 @@ class Quiz extends Component {
     onNextButtonHandler() {
         this.props.gotoNextQuestion();
         this.calculateScore();
-        console.log(this.props.apiData)
+        console.log(this.props.apiData[0]["response_code"]);
+        let resultArray = (this.props.apiData[0]["results"]);
+        for (let i of resultArray) {
+            console.log(i);
+        }
+        console.log(typeof resultArray)
+
 
     }
 
@@ -138,8 +147,8 @@ const mapDispatchToProps = dispatch => {
         gotoNextQuestion: () => dispatch(gotoNextQuestion()),
         gotoPrevQuestion: () => dispatch(gotoPrevQuestion()),
         selectAnswer: (questionId, selectedAnswer, callback) => dispatch(customSelectAnswer(questionId, selectedAnswer, callback)),
-        getData: () => dispatch(getData())
+        getData: (category) => dispatch(getData(category))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Quiz));
