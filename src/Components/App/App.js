@@ -17,7 +17,7 @@ class App extends Component {
                 <section >
                     <div class={classes.quizContainer} >
                       
-                        <Route exact path="/Quiz-using-React-Redux"
+                        <Route exact path={process.env.PUBLIC_URL + "/"}
                         component={Home} >
 
                         </Route>
@@ -25,7 +25,7 @@ class App extends Component {
                 </section>
 
                 <div>
-                    <Route path="/:id"
+                    <Route path={process.env.PUBLIC_URL + "/:id"}
                         component={Quiz} />
                 </div>
             </React.Fragment>
