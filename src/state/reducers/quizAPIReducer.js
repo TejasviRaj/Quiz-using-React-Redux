@@ -9,7 +9,7 @@ const initialState = {
 function quizAPIReducer(state = initialState, action) {
     if (action.type === Actions.DATA_FETCHED) {
         return Object.assign({}, state, {
-            questionAnswerList: state.questionAnswerList.concat(action.payload)
+            questionAnswerList: [].concat(action.payload)
         });
     }
     return state;

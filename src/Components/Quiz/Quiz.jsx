@@ -5,9 +5,12 @@ import { connect } from 'react-redux';
 import { gotoNextQuestion, gotoPrevQuestion } from '../../state/actions/gotoQuestionsCreator'
 import { customSelectAnswer } from '../../state/actions/selectAnswerCreator'
 import { fetchData } from '../../state/actions/quizAPICreator';
+import {resetQuestionCounter} from '../../state/actions/resetQuestionCounterCreator'
 import classes from './Quiz.css';
 import Question from '../Question/Question';
 import { withRouter } from "react-router-dom";
+import he from 'he';
+import {Link} from 'react-router-dom'
 
 
 class Quiz extends Component {
@@ -17,10 +20,10 @@ class Quiz extends Component {
         this.state = {
             isSubmit: false,
             score: 0,
-            dataFetched: 0
+            dataFetched: 0,
         };
+        this.category = this.props.match.params.id;
         this.questionAnswerList = null;
-        this.id = this.props.match.params.id;
         this.selectAnswer = this.selectAnswer.bind(this);
         this.onNextButtonHandler = this.onNextButtonHandler.bind(this);
     }
@@ -51,18 +54,44 @@ class Quiz extends Component {
 
     componentDidMount() {
 
-        this.props.fetchData(this.id).then(() => {
-            console.log(this.props.questionAnswerList[0]["response_code"]);
-            let resultArray = (this.props.questionAnswerList[0]["results"]);
-            for (let i of resultArray) {
-                console.log(i);
+        this.questionAnswerList = null;
+
+        
+        this.props.fetchData(this.category).then(() => {
+            console.log("API hit with category" + this.state.category)
+            this.questionAnswerList = [];
+
+            if(this.props.questionAnswerList[0]["response_code"] !== 0) {
+                console.log("response code not 0");
                 this.questionAnswerList = this.backupQuestionAnswerList;
+                return;
+            };
+            this.questionAnswerList = [];
+            console.log(this.props.questionAnswerList);
+            let questionAnswerArray = (this.props.questionAnswerList[0]["results"]);
+            for (let questionAnswerAPI of questionAnswerArray) {
+                let questionAnswer = {};
+                
+                questionAnswer.question = he.decode(questionAnswerAPI.question);
+                questionAnswer.choices = [...questionAnswerAPI.incorrect_answers, questionAnswerAPI.correct_answer];
+                questionAnswer.correctAnswer = questionAnswerAPI.correct_answer;
+                this.questionAnswerList.push(questionAnswer);
+
             }
-            console.log(typeof resultArray);
-        }).catch(() => {
+            console.log(this.questionAnswerList);
+        }).catch((e) => {
+            console.log("Error catched -", e);
             this.questionAnswerList = this.backupQuestionAnswerList.slice();
         }).finally(() => this.setState({dataFetched: !this.state.dataFetched}));
     }
+
+
+    componentWillUnmount() {
+        this.props.resetQuestionCounter();
+        console.log("unmounted");
+    }
+   
+    
 
     selectAnswer(questionId, selectedAnswer) {
         if (this.props.selectedQuestionIndex === (this.questionAnswerList.length - 1)) {
@@ -136,7 +165,9 @@ class Quiz extends Component {
                         <p className={classes.quizCaptionSH}>Score - {this.state.score} </p>
                         <p className={classes.quizCaptionSH}>Total - 100 </p>
 
+                        <Link to="/">
                         <button className={classes.submit}>HOME</button>
+                        </Link>
                     </div>
                 </React.Fragment>
             );
@@ -157,6 +188,7 @@ const mapDispatchToProps = dispatch => {
     return {
         gotoNextQuestion: () => dispatch(gotoNextQuestion()),
         gotoPrevQuestion: () => dispatch(gotoPrevQuestion()),
+        resetQuestionCounter: () => dispatch(resetQuestionCounter()),
         selectAnswer: (questionId, selectedAnswer, callback) => dispatch(customSelectAnswer(questionId, selectedAnswer, callback)),
         fetchData: (category) => dispatch(fetchData(category))
     }

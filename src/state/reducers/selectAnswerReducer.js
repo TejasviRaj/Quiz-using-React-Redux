@@ -15,6 +15,10 @@ const selectAnswerReducer = (state = initialState, action) => {
                     [action.questionId]:action.selectedAnswer
                 } 
             }
+        case Actions.RESET_QUESTION_COUNTER:
+            return {
+                selectedAnswers: {}
+            }
         default: 
             return state;
     }

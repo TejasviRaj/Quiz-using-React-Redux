@@ -7,6 +7,6 @@ export function fetchData(category) {
         .then(response => response.json())
         .then(json => {
           dispatch({ type: Actions.DATA_FETCHED, payload: json });
-        });
+        }).then(console.log("dispatched"));
     };
   }

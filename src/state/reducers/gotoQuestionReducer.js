@@ -16,6 +16,10 @@ const gotoQuestionReducer = (state = initialState, action) => {
             return {
                 selectedQuestionIndex: state.selectedQuestionIndex - 1
             }
+        case Actions.RESET_QUESTION_COUNTER:
+            return {
+                selectedQuestionIndex: 0
+            }
         default: 
             return state;
     }
