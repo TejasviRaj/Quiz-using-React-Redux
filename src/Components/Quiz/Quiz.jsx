@@ -71,8 +71,11 @@ class Quiz extends Component {
             let questionAnswerArray = (this.props.questionAnswerList[0]["results"]);
             for (let questionAnswerAPI of questionAnswerArray) {
                 let questionAnswer = {};
-                
+                questionAnswerAPI.correct_answer = he.decode(questionAnswerAPI.correct_answer);
                 questionAnswer.question = he.decode(questionAnswerAPI.question);
+                for (let choiceIndex in questionAnswerAPI.incorrect_answers) {
+                    questionAnswerAPI.incorrect_answers[choiceIndex] = he.decode(questionAnswerAPI.incorrect_answers[choiceIndex]);
+                }
                 questionAnswer.choices = [...questionAnswerAPI.incorrect_answers, questionAnswerAPI.correct_answer];
                 questionAnswer.correctAnswer = questionAnswerAPI.correct_answer;
                 this.questionAnswerList.push(questionAnswer);
