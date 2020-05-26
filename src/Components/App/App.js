@@ -12,22 +12,25 @@ class App extends Component {
     render() {
         return (
             <React.Fragment >
-                <section >
-                    <div class={classes.quizContainer} >
-                        <div style={{ textAlign: "center", }} >
+                  <div style={{ textAlign: "center", }} >
                             <h2 class="section-heading"
                                 style={{ textTransform: "uppercase" }} > Quiz </h2>
                             <h3 class="section-subheading"
-                                style={{ color: "#6c757d" }} > Select a Quiz Category
+                                style={{ color: "#6c757d" }} > TEST YOUR KNOWLEDGE
                                 </h3>
                         </div >
+                <section >
+                    <div class={classes.quizContainer} >
+                      
                         <Route path="/cat"
-                        component={Home} />
+                        component={Home} >
+
+                        </Route>
                     </div>
                 </section>
 
                 <div>
-                    <Route path="/home"
+                    <Route path="/quiz"
                         component={Quiz} />
                 </div>
             </React.Fragment>

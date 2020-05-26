@@ -27,12 +27,29 @@ h3.section-subheading {
 }
 
 .quiz-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
     padding: 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
 	font-size: .9rem;
-	font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+	font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	overflow-y: auto;
+}
+
+@media (max-width:992px) {
+    .quiz-footer {
+		visibility:  hidden;
+	}
+}
+
+@media (max-height:780px) {
+    .quiz-footer {
+		visibility:  hidden;
+	}
 }
 
 .social-media {

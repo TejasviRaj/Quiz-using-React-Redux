@@ -23,13 +23,42 @@ font-size: 25px;
 .quizBox {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    min-height: 15rem;
+    max-height: 100%;
+    text-align: center;
     
 }
+/* 
+@media (min-height:650px) {
+    .quizBox 
+        {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);	
+    }
+} */
 
 .quizBox > * {
-    margin-top: 0.5rem;
+    margin-top: .6rem;
 }
 
+.score {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+
+.quizCaptionHeading {
+    font-size: 1.5rem;
+    font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 700;
+    margin-bottom: 0rem;
+}
+
+.quizCaptionSH {
+    font-style: italic;
+    font-family: "Droid Serif", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #6c757d;
+    margin-top: 0rem;
+}

@@ -49,14 +49,13 @@ class Quiz extends Component {
     }
 
     selectAnswer(questionId, selectedAnswer) {
-        if (this.props.selectedQuestionIndex === 3){
-            this.props.selectAnswer(questionId, selectedAnswer, null);
+        if (this.props.selectedQuestionIndex === (this.questionAnswerList.length-1)){
+            this.props.selectAnswer(questionId, selectedAnswer, null).then(() => this.calculateScore());
+            
             return;
         }
         this.props.selectAnswer(questionId, selectedAnswer, this.calculateScore);
-    //    this.props.gotoNextQuestion();
-        // this.calculateScore();
-      //  this.onNextButtonHandler();
+
     }
 
     onPrevButtonHandler = () => {
@@ -83,7 +82,7 @@ class Quiz extends Component {
                 score++;
             }
         });
-        this.setState({ score: score });
+        this.setState({ score: score*10 });
     }
 
     render() {
@@ -92,7 +91,7 @@ class Quiz extends Component {
         if (!this.state.isSubmit) {
             return (
                 <div className = {classes.quizBox}>
-                    Score - {this.state.score}
+                    <p class = {classes.score}>Score - {this.state.score} </p>
                         <Question
                             selectedAnswer={this.props.selectedAnswers[this.props.selectedQuestionIndex]}
                             selectAnswer={this.selectAnswer}
@@ -111,8 +110,14 @@ class Quiz extends Component {
         else {
             return (
                 <React.Fragment>
-                    Congratulations
-                    Score - {this.state.score}                   
+                <div className = {classes.quizBox}>
+                    <p className = {classes.quizCaptionHeading}>Results </p>
+                    <br/>
+                    <p className = {classes.quizCaptionSH}>Score - {this.state.score} </p> 
+                    <p className = {classes.quizCaptionSH}>Total - 100 </p> 
+
+                    <button className = {classes.submit}>HOME</button>
+                    </div>              
                 </React.Fragment>
             );
         }
