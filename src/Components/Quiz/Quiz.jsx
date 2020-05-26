@@ -11,7 +11,7 @@ import Question from '../Question/Question';
 import { withRouter } from "react-router-dom";
 import he from 'he';
 import {Link} from 'react-router-dom'
-
+import backupQuestionAnswerList from './backupQuestionAnswerList'
 
 class Quiz extends Component {
 
@@ -25,31 +25,7 @@ class Quiz extends Component {
         this.category = this.props.match.params.id;
         this.questionAnswerList = null;
         this.selectAnswer = this.selectAnswer.bind(this);
-        this.onNextButtonHandler = this.onNextButtonHandler.bind(this);
     }
-
-    backupQuestionAnswerList = [
-        {
-            question: "Who played Hey Jude?",
-            choices: ["Beatles", "Pink Floyd", "Mettalica", "Nirvana"],
-            correctAnswer: "Beatles"
-        },
-        {
-            question: "Where was Buddha born?",
-            choices: ["Nepal", "India", "China", "Japan"],
-            correctAnswer: "Nepal"
-        },
-        {
-            question: "When is Mikkel?",
-            choices: ["1921", "1953", "1986", "2019"],
-            correctAnswer: "1986"
-        },
-        {
-            question: "Best FB Group.",
-            choices: ["MRR", "MRR vs WRR", "RONB", "khai k bhannu"],
-            correctAnswer: "khai k bhannu"
-        }
-    ];
 
 
     componentDidMount() {
@@ -63,7 +39,7 @@ class Quiz extends Component {
 
             if(this.props.questionAnswerList[0]["response_code"] !== 0) {
                 console.log("response code not 0");
-                this.questionAnswerList = this.backupQuestionAnswerList;
+                this.questionAnswerList = backupQuestionAnswerList;
                 return;
             };
             this.questionAnswerList = [];
@@ -84,7 +60,7 @@ class Quiz extends Component {
             console.log(this.questionAnswerList);
         }).catch((e) => {
             console.log("Error catched -", e);
-            this.questionAnswerList = this.backupQuestionAnswerList.slice();
+            this.questionAnswerList = backupQuestionAnswerList.slice();
         }).finally(() => this.setState({dataFetched: !this.state.dataFetched}));
     }
 
@@ -105,23 +81,7 @@ class Quiz extends Component {
         this.props.selectAnswer(questionId, selectedAnswer, this.calculateScore);
 
     }
-
-    onPrevButtonHandler = () => {
-        this.props.gotoPrevQuestion();
-        this.calculateScore();
-    }
-
-    onNextButtonHandler() {
-        this.props.gotoNextQuestion();
-        this.calculateScore();
-      
-    }
-
-    onSubmitQuizHandler = () => {
-        this.setState({ isSubmit: true });
-        this.calculateScore();
-    }
-
+    
     calculateScore = () => {
         let score = 0;
         this.questionAnswerList.forEach((questionObj, index) => {
@@ -153,8 +113,8 @@ class Quiz extends Component {
                         className={classes.question}
                     />
                     <div class="skipBackBtns">
-                        {this.props.selectedQuestionIndex > 0 ? <button className={classes.submit} onClick={this.onPrevButtonHandler}>BACK</button> : <div> </div>}
-                        {(this.props.selectedQuestionIndex < (this.questionAnswerList.length - 1)) ? <button className={classes.submit} onClick={this.onNextButtonHandler}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE' : 'SKIP'}</button> : <button className={classes.submit} onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
+                        {this.props.selectedQuestionIndex > 0 ? <button className={classes.submit} onClick={this.props.gotoPrevQuestion}>BACK</button> : <div> </div>}
+                        {(this.props.selectedQuestionIndex < (this.questionAnswerList.length - 1)) ? <button className={classes.submit} onClick={this.props.gotoNextQuestion}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE' : 'SKIP'}</button> : <button className={classes.submit} onClick={() => this.setState({ isSubmit: true })}>SUBMIT</button>}
                     </div>
                 </div>
             );
