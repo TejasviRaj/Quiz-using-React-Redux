@@ -1,3 +1,29 @@
  /* Author- Tejasvi Raj Pant */
 
 
+.question {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+color: #333;
+display: contents;
+font-size: 2rem;
+}
+
+.choice {
+cursor: pointer;
+width: 20rem;
+height: 2.2rem;
+font-size: 15px;
+border: 1px solid #3E8BD5;
+border-radius: 20px;
+}
+
+.questionBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.questionBox > * {
+    margin-top: 0.5rem;
+}

@@ -15,15 +15,13 @@ class Question extends React.Component {
     }
     render() {
         return (
-            <div>
-                <div>
-                    <p> {this.props.question} </p>
+            <div className = {classes.questionBox}>
+                    <p className = {classes.question}> {this.props.question} </p>
                     {this.props.choices.map(choice => {
-                        return <div key={choice} onClick={() => this.selectAnswer(choice)}>
+                        return <button className = {classes.choice} key={choice} onClick={() => this.selectAnswer(choice)}>
                             {choice}
-                        </div>
+                        </button>
                     })}
-                </div>
             </div>
         );
     }

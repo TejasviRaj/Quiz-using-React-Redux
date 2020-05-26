@@ -91,22 +91,21 @@ class Quiz extends Component {
 
         if (!this.state.isSubmit) {
             return (
-                <React.Fragment>
+                <div className = {classes.quizBox}>
                     Score - {this.state.score}
-                    <div>
                         <Question
                             selectedAnswer={this.props.selectedAnswers[this.props.selectedQuestionIndex]}
                             selectAnswer={this.selectAnswer}
                             selectedQuestionIndex={this.props.selectedQuestionIndex}
                             question = {question}
                             choices = {choices}
+                            className = {classes.question}
                         />
-                        <div>
-                                {this.props.selectedQuestionIndex > 0 ? <button onClick={this.onPrevButtonHandler}>BACK</button> : null}
-                                {(this.props.selectedQuestionIndex < (this.questionAnswerList.length-1))? <button onClick={this.onNextButtonHandler}>SKIP</button>: <button onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
+                        <div class = "skipBackBtns">
+                                {this.props.selectedQuestionIndex > 0 ? <button className = {classes.submit} onClick={this.onPrevButtonHandler}>BACK</button> : <div> </div>}
+                                {(this.props.selectedQuestionIndex < (this.questionAnswerList.length-1))? <button className = {classes.submit} onClick={this.onNextButtonHandler}>SKIP</button>: <button className = {classes.submit} onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
                         </div>
-                    </div>
-                </React.Fragment>
+                </div>
             );
         }
         else {

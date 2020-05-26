@@ -1,0 +1,35 @@
+.submit {
+margin: 10;
+cursor: pointer;
+background-color: #4B4B71;
+border-radius: 20px;
+width: 180px;
+height: 45px;
+font-family: Roboto;
+color: white;
+font-size: 25px;
+}
+
+.skipBackBtns {
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.skipBackBtns > * {
+    margin-left: 0.5rem;
+}
+
+.quizBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 15rem;
+    
+}
+
+.quizBox > * {
+    margin-top: 0.5rem;
+}
+
