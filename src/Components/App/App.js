@@ -25,7 +25,7 @@ class App extends Component {
                 </section>
 
                 <div>
-                    <Route path={process.env.PUBLIC_URL + "/:id"}
+                    <Route exact path={process.env.PUBLIC_URL + "/:id"}
                         component={Quiz} />
                 </div>
             </React.Fragment>
