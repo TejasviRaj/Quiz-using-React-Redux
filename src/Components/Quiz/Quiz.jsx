@@ -12,6 +12,7 @@ import { withRouter } from "react-router-dom";
 import he from 'he';
 import {Link} from 'react-router-dom'
 import backupQuestionAnswerList from './backupQuestionAnswerList'
+import Result from '../Result/Result';
 
 class Quiz extends Component {
 
@@ -112,7 +113,7 @@ class Quiz extends Component {
                         choices={choices}
                         className={classes.question}
                     />
-                    <div class="skipBackBtns">
+                    <div class={classes.skipBackBtns}>
                         {this.props.selectedQuestionIndex > 0 ? <button className={classes.submit} onClick={this.props.gotoPrevQuestion}>BACK</button> : <div> </div>}
                         {(this.props.selectedQuestionIndex < (this.questionAnswerList.length - 1)) ? <button className={classes.submit} onClick={this.props.gotoNextQuestion}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE' : 'SKIP'}</button> : <button className={classes.submit} onClick={() => this.setState({ isSubmit: true })}>SUBMIT</button>}
                     </div>
@@ -121,18 +122,7 @@ class Quiz extends Component {
         }
         else {
             return (
-                <React.Fragment>
-                    <div className={classes.quizBox}>
-                        <p className={classes.quizCaptionHeading}>Results </p>
-                        <br />
-                        <p className={classes.quizCaptionSH}>Score - {this.state.score} </p>
-                        <p className={classes.quizCaptionSH}>Total - 100 </p>
-
-                        <Link to="/">
-                        <button className={classes.submit}>HOME</button>
-                        </Link>
-                    </div>
-                </React.Fragment>
+               <Result score = {this.state.score} />
             );
         }
 
