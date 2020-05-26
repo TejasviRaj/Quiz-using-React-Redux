@@ -103,7 +103,7 @@ class Quiz extends Component {
                         />
                         <div class = "skipBackBtns">
                                 {this.props.selectedQuestionIndex > 0 ? <button className = {classes.submit} onClick={this.onPrevButtonHandler}>BACK</button> : <div> </div>}
-            {(this.props.selectedQuestionIndex < (this.questionAnswerList.length-1))? <button className = {classes.submit} onClick={this.onNextButtonHandler}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE': 'SKIP'}</button>: <button className = {classes.submit} onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
+                                {(this.props.selectedQuestionIndex < (this.questionAnswerList.length-1))? <button className = {classes.submit} onClick={this.onNextButtonHandler}>{this.props.selectedAnswers[this.props.selectedQuestionIndex] ? 'CONTINUE': 'SKIP'}</button>: <button className = {classes.submit} onClick={this.onSubmitQuizHandler}>SUBMIT</button>}
                         </div>
                 </div>
             );
